@@ -49,7 +49,8 @@ const OnGoingRequests = () => {
           }
         )
         .then((res) => {
-          console.log(res)
+          const newData = data.filter(res => res._id != id)
+          setData(newData)
           alert('success')
         })
         .catch((err) => {

@@ -21,6 +21,31 @@ const ShipmentReqests = () => {
             alert(err.response.data.message || "Something went wrong!");
           });
       };
+
+      const handleRevoke = (id) => {
+        // console.log(id);
+        axios
+          .delete("/api/loads/"+id, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + localStorage.getItem("tk"),
+            },
+          })
+          .then((res) => {
+            const newData = data.filter(res => res._id != id)
+            setData(newData)
+            alert("Successfully revoke the request")
+          })
+          .catch((err) => {
+            console.log(err);
+            alert(err.response.data.message || "Something went wrong!");
+          });
+      }
+
+      const handlePay = (id) => {
+        // handle payment
+      }
+
       useEffect(() => {
         getAllReqs()
       }, [])
@@ -33,9 +58,14 @@ const ShipmentReqests = () => {
                 <p>Pickup Location: {req.pickup}</p>
                 <p>Deliever to: {req.destination}</p>
                 <p>Type of load: {req.loadType}</p>
-                <div className={style.cardBtns}>
+                <div className={style.cardBtns} style={{display: "flex", alignItems:'center'}}>
                     <p className={style.reqStatus}>{req.status}</p>
-                    <button className={style.deleteReq}>Revoke</button>
+                    {req.status=='ASSIGNED' ? 
+                      <div>
+                        <p>Assigned to: {req.truckNum}</p>
+                        <button className={style.payBtn} onClick={() => handlePay(req._id)}>Pay Advance</button>
+                      </div>
+                    : <button onClick={() => handleRevoke(req._id)} className={style.deleteReq}>Revoke</button>}
                 </div>
             </div>
         ))}

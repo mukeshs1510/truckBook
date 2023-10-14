@@ -27,11 +27,11 @@ const loadSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  pickup_address: {
+  pickup: {
     type: String,
     required: true,
   },
-  delivery_address: {
+  destination: {
     type: String,
     required: true,
   },
@@ -49,7 +49,7 @@ const loadSchema = mongoose.Schema({
   },
   truckNum: {
     type: String,
-    required: true,
+    required: false,
   },
   
   logs: [],

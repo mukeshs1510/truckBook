@@ -19,7 +19,7 @@ const MakeShipRequest = () => {
       .then((res) => {
         alert("Load has been created!");
         event.target.reset();
-        navigate("/requests");
+        
       })
       .catch((err) => {
         console.log(err);
